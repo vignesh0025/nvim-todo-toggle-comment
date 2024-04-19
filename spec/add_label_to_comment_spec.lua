@@ -1,4 +1,4 @@
-local utils = require('utils')
+local utils = require('lua.nvim-todo-toggle-comment.utils')
 
 describe("Busted Unit Test: ", function()
 	describe("add_label_to_comment: ", function()
