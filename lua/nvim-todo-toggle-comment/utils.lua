@@ -8,15 +8,19 @@ end
 -- comment_string: full comment string
 -- comment_extract_pattern: Extracts comment test from commant_string "(/%*)(.-)(%*/)" or "(//)(.-)"
 local extract_comment_without_label = function (comment_string, comment_extract_pattern, label_token)
-	local label_extract_pattern = "%s*"..label_token.."%s*" -- <space>TODO:<space>
-	local trim_space_start_end_pattern = "%s*(.-)%s*$"
 
-	local _, _, comment_text = string.find(comment_string, comment_extract_pattern, 0)
 	local raw_comment = ""
+	local _, _, comment_text = string.find(comment_string, comment_extract_pattern, 0)
+
 	if comment_text == nil then
 		error("ToVignesh: Can't extract comment_text with "..comment_extract_pattern.." from "..comment_string, 2)
 	else
-		raw_comment = string.gsub(comment_text, label_extract_pattern, ""):gsub(trim_space_start_end_pattern, "%1")
+		if label_token ~= nil then
+			local label_extract_pattern = "%s*"..label_token.."%s*" -- <space>TODO:<space>
+			raw_comment = trim(string.gsub(comment_text, label_extract_pattern, ""))
+		else
+			raw_comment = trim(comment_text)
+		end
 	end
 
 	return raw_comment
@@ -38,5 +42,18 @@ local add_label_to_comment = function (raw_comment, comment_pattern, label)
 end
 
 M.add_label_to_comment = add_label_to_comment;
+
+local extract_label_from_comment = function (comment_text, possible_labels)
+	for i, val in ipairs(possible_labels) do
+		local s,_ = string.find(comment_text, val, 0, true)
+		if s ~= nil then
+			return i
+		end
+	end
+
+	return nil
+end
+
+M.extract_label_from_comment = extract_label_from_comment;
 
 return M

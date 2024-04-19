@@ -5,7 +5,7 @@ describe("Busted Unit Test: ", function()
 
 	-- deep check comparisons!
     it("Default use case", function()
-      assert.are.same(utils.extract_comment_without_label("/* TODO: This is todo comment */", "/%*(.+)%*/", "TODO:"), "This is todo comment")
+      assert.are.same("This is todo comment", utils.extract_comment_without_label("/* TODO: This is todo comment */", "/%*(.+)%*/", "TODO:"))
 	end)
 
 	it("Default use case", function()
@@ -13,19 +13,19 @@ describe("Busted Unit Test: ", function()
 	end)
 
 	it("Default use case", function()
-		assert.are.same(utils.extract_comment_without_label("/* This is default comment */", "/%*(.+)%*/", "FIX:"), "This is default comment")
+		assert.are.same("This is default comment", utils.extract_comment_without_label("/* This is default comment */", "/%*(.+)%*/"))
 	end)
 
 	it("Default use case", function()
-		assert.are.same(utils.extract_comment_without_label("/*This is default comment with no start end space*/", "/%*(.+)%*/", "FIX:"), "This is default comment with no start end space")
+		assert.are.same("This is default comment with no start end space", utils.extract_comment_without_label("/*This is default comment with no start end space*/", "/%*(.+)%*/"))
 	end)
 
 	it("Default use case", function()
-		assert.are.same(utils.extract_comment_without_label("/*This is default comment with no end space */", "/%*(.+)%*/", "FIX:"), "This is default comment with no end space")
+		assert.are.same(utils.extract_comment_without_label("/*This is default comment with no end space */", "/%*(.+)%*/"), "This is default comment with no end space")
 	end)
 
 	it("Default use case", function()
-		assert.are.same(utils.extract_comment_without_label("/* This is default comment with no start space*/", "/%*(.+)%*/", "FIX:"), "This is default comment with no start space")
+		assert.are.same(utils.extract_comment_without_label("/* This is default comment with no start space*/", "/%*(.+)%*/"), "This is default comment with no start space")
 	end)
 
 	it("Default use case", function()

@@ -10,7 +10,7 @@ describe("Busted Unit Test: ", function()
 			assert.are.same(exp_cfg, mod.get_config())
 		end)
 
-		it("Return config without user override", function()
+		it("Return config with user override", function()
 			local exp_cfg = mod.get_def_config()
 
 			exp_cfg.add_spc_end_cmt = false

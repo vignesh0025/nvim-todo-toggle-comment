@@ -2,10 +2,10 @@ local M = {}
 
 local def_config = {
 	add_spc_end_cmt = true,
-	test_option = true,
 	nested_comment = {
 		nested_option = "default_nested"
-	}
+	},
+	labels = {"TODO:", "FIX:", "HACK:", "PERF:", "WARNING", "INFO"}
 }
 
 local get_def_config = function ()
