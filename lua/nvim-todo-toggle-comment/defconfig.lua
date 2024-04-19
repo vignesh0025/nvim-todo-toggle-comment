@@ -18,7 +18,7 @@ local get_config = function (config)
 	if config ~= nil then
 		return vim.tbl_deep_extend("force", def_config, config)
 	else
-		return def_config
+		return get_def_config()
 	end
 end
 
