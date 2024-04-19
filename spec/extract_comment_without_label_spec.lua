@@ -1,11 +1,8 @@
 local utils = require('utils')
 
---negative cases
--- print(utils.extract_comment_without_label("/* TODO: This is todo comment", "/%*(.+)%*/", "TODO:"))
+describe("Busted Unit Test: ", function()
+  describe("extract_comment_without_label: ", function()
 
-describe("Busted unit testing framework", function()
-  describe("Testing comment extraction from label", function()
-	--
 	-- deep check comparisons!
     it("Default use case", function()
       assert.are.same(utils.extract_comment_without_label("/* TODO: This is todo comment */", "/%*(.+)%*/", "TODO:"), "This is todo comment")
