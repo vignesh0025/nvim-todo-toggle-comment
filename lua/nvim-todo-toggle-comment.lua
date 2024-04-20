@@ -26,23 +26,37 @@ M.setup = function (config)
 	-- vim.print(M.config)
 end
 
-M.add_label_comment = function (label)
-	if label == '' then
-		label = nil
-	end
-
-	ts.get_parser(0):parse()
-	local current_node = vim.treesitter.get_node()
+M.get_comment_node = function (bufnr)
+	ts.get_parser(bufnr):parse()
+	local current_node = vim.treesitter.get_node({ bufnr= bufnr })
 	local comment_node = ts_comment_node.get_comment_node(current_node)
-	if comment_node ~= nil then
-		local comment_text = ts.get_node_text(comment_node, 0)
+
+	return comment_node
+end
+
+M.preview_label_comment = function (bufnr, comment_node, label)
+		local comment_text = ts.get_node_text(comment_node, bufnr)
 		local start_row, start_col, end_row, end_col = ts.get_node_range(comment_node)
 
 		local label_idx = utils.extract_label_from_comment(comment_text, M.config.labels)
 		local raw_comment = utils.extract_comment_without_label(comment_text, "/%*(.+)%*/", M.config.labels[label_idx])
 		local final_comment = utils.add_label_to_comment(raw_comment, "/*%s*/", label)
 
-		vim.api.nvim_buf_set_text(0, start_row, start_col, end_row, end_col, {final_comment})
+		return {final_comment, start_row, start_col, end_row, end_col}
+	end
+
+M.add_label_comment = function (label, bufnr)
+	if label == '' then
+		label = nil
+	end
+
+	local current_bufnr = bufnr or vim.fn.bufnr()
+	local comment_node = M.get_comment_node(current_bufnr)
+
+	if comment_node ~= nil then
+		local ret = M.preview_label_comment(current_bufnr, comment_node, label)
+		local final_comment, start_row, start_col, end_row, end_col = unpack(ret)
+		vim.api.nvim_buf_set_text(current_bufnr, start_row, start_col, end_row, end_col, {final_comment})
 	end
 end
 

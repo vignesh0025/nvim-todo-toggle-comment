@@ -5,7 +5,7 @@ local def_config = {
 	nested_comment = {
 		nested_option = "default_nested"
 	},
-	labels = {"TODO:", "FIX:", "HACK:", "PERF:", "WARNING", "INFO"}
+	labels = {"", "TODO:", "FIX:", "HACK:", "PERF:", "WARNING:", "INFO:"}
 }
 
 local get_def_config = function ()

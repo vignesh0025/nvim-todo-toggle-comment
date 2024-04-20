@@ -29,6 +29,9 @@ end
 M.extract_comment_without_label = extract_comment_without_label;
 
 local add_label_to_comment = function (raw_comment, comment_pattern, label)
+	if label == "" or label == '' then
+		label = nil
+	end
 	raw_comment = trim(raw_comment)
 	if label ~= nil then
 		label = string.gsub(label, "%s+", "") -- Trim label if necessary
@@ -45,9 +48,11 @@ M.add_label_to_comment = add_label_to_comment;
 
 local extract_label_from_comment = function (comment_text, possible_labels)
 	for i, val in ipairs(possible_labels) do
-		local s,_ = string.find(comment_text, val, 0, true)
-		if s ~= nil then
-			return i
+		if val ~= "" and val ~= '' then
+			local s,_ = string.find(comment_text, val, 0, true)
+			if s ~= nil then
+				return i
+			end
 		end
 	end
 
